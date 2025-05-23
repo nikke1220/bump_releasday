@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>検索</title>
+</head>
+<body>
+    <h1>リリース日検索</h1>
+    <form method="post">
+        <input type="text" name="keyword" placeholder="作品名または日付 (例: 2004-12)">
+        <input type="submit" value="検索">
+    </form>
+
+    {% if keyword %}
+        <h2>「{{ keyword }}」の検索結果:</h2>
+        <ul>
+            {% for row in results %}
+                <li>{{ row.title }} ({{ row.year }}年{{ row.month }}月{{ row.day }}日)</li>
+            {% endfor %}
+        </ul>
+        {% if results|length == 0 %}
+            <p>該当するデータはありませんでした。</p>
+        {% endif %}
+    {% endif %}
+
+    <p><a href="/">← 一覧に戻る</a></p>
+</body>
+</html>
+<form method="GET" action="/search">
+  <label for="sort">並び替え:</label>
+  <select name="sort" id="sort" onchange="this.form.submit()">
+    <option value="default" {% if sort == 'default' %}selected{% endif %}>デフォルト</option>
+    <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>古い順</option>
+    <option value="title" {% if sort == 'title' %}selected{% endif %}>タイトル順</option>
+  </select>
+  <input type="hidden" name="keyword" value="{{ keyword }}">
+</form>

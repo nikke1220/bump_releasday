@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>リリース日一覧</title>
+</head>
+<form method="GET" action="/">
+  <label for="sort">並び替え:</label>
+  <select name="sort" id="sort" onchange="this.form.submit()">
+    <option value="default" {% if sort == 'default' %}selected{% endif %}>デフォルト</option>
+    <option value="oldest" {% if sort == 'oldest' %}selected{% endif %}>古い順</option>
+    <option value="title" {% if sort == 'title' %}selected{% endif %}>タイトル順</option>
+  </select>
+</form>
+
+<body>
+    
+    <table border="1">
+    <p><a href="/search_date">日付検索</a></p>
+    <p><a href="/search">ワード検索</a></p>
+        <tr>
+            <th>年</th>
+            <th>月</th>
+            <th>日</th>
+            <th>作品名</th>
+        </tr>
+        {% for release in releases %}
+        <tr>
+            <td>{{ release.year }}</td>
+            <td>{{ release.month }}</td>
+            <td>{{ release.day }}</td>
+            <td>{{ release.title }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+<p><a href="/search_date">日付検索</a></p>
+<p><a href="/search">ワード検索</a></p>
